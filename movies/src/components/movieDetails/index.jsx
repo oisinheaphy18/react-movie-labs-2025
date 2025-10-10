@@ -1,75 +1,60 @@
-import React from "react";
-import Chip from "@mui/material/Chip";
-import Paper from "@mui/material/Paper";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import MonetizationIcon from "@mui/icons-material/MonetizationOn";
-import StarRate from "@mui/icons-material/StarRate";
-import NavigationIcon from "@mui/icons-material/Navigation";
-import Fab from "@mui/material/Fab";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import Box from "@mui/material/Box";
 
+export default function MoviePage() {
+  const { id } = useParams();
+  const [movie, setMovie] = useState(null);
+  const [images, setImages] = useState([]);
 
-const root = {
-    display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    listStyle: "none",
-    padding: 1.5,
-    margin: 0,
-};
-const chip = { margin: 0.5 };
+  useEffect(() => {
+    fetch(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+      .then((res) => res.json())
+      .then((data) => setMovie(data));
+  }, [id]);
 
-const MovieDetails = ( props) => {
-  const movie = props.movie
+  useEffect(() => {
+    fetch(
+      `https://api.themoviedb.org/3/movie/${id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`
+    )
+      .then((res) => res.json())
+      .then((json) => json.posters || [])
+      .then((imgs) => setImages(imgs));
+  }, [id]);
+
+  if (!movie) return null;
 
   return (
-    <>
-      <Typography variant="h5" component="h3">
-        Overview
+    <Container sx={{ py: 3 }}>
+      <Typography variant="h4" sx={{ mb: 1 }}>
+        {movie.title}
       </Typography>
-
-      <Typography variant="h6" component="p">
+      <Typography variant="body1" sx={{ mb: 3 }}>
         {movie.overview}
       </Typography>
 
-      <Paper 
-        component="ul" 
-        sx={{...root}}
-      >
-        <li>
-          <Chip label="Genres" sx={{...chip}} color="primary" />
-        </li>
-        {movie.genres.map((g) => (
-          <li key={g.name}>
-            <Chip label={g.name} sx={{...chip}} />
-          </li>
-        ))}
-      </Paper>
-      <Paper component="ul" sx={{...root}}>
-        <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
-        <Chip
-          icon={<MonetizationIcon />}
-          label={`${movie.revenue.toLocaleString()}`}
-        />
-        <Chip
-          icon={<StarRate />}
-          label={`${movie.vote_average} (${movie.vote_count})`}
-        />
-        <Chip label={`Released: ${movie.release_date}`} />
-      </Paper>
-      <Fab
-        color="secondary"
-        variant="extended"
+      <ImageList
         sx={{
-            position: "fixed",
-            bottom: 2,
-            right: 2
+          height: "100vh",
         }}
+        cols={1}
       >
-        <NavigationIcon />
-        Reviews
-      </Fab>
-      </>
+        {images.map((image) => (
+          <ImageListItem key={image.file_path} cols={1}>
+            <img
+              src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
+              alt={image.file_path}
+            />
+          </ImageListItem>
+        ))}
+      </ImageList>
+      <Box sx={{ height: 24 }} />
+    </Container>
   );
-};
-export default MovieDetails ;
+}

@@ -1,83 +1,65 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
+import CardHeader from "@mui/material/CardHeader";
 import TextField from "@mui/material/TextField";
-import SearchIcon from "@mui/icons-material/Search";
 import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
-import img from "../../images/pexels-dziana-hasanbekava-5480827.jpg";
+import MenuItem from "@mui/material/MenuItem";
+import { getGenres } from "../../api/tmdb-api";
 
-const formControl = {
-  margin: 1,
-  minWidth: "90%",
-  backgroundColor: "rgb(255, 255, 255)",
-};
-
-export default function FilterMoviesCard(props) {
+const FilterMoviesCard = ({
+  onUserInput,
+  titleFilter = "",
+  genreFilter = "0",
+}) => {
   const [genres, setGenres] = useState([{ id: "0", name: "All" }]);
 
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`
-    )
-      .then((res) => res.json())
-      .then((json) => json.genres)
-      .then((apiGenres) => {
-        const stringified = apiGenres.map((g) => ({ id: String(g.id), name: g.name }));
-        setGenres([{ id: "0", name: "All" }, ...stringified]);
-      });
+    getGenres().then((allGenres) => {
+      setGenres([genres[0], ...allGenres]);
+    });
   }, []);
 
   const handleTextChange = (e) => {
-    props.onUserInput("name", e.target.value);
+    onUserInput("name", e.target.value);
   };
 
   const handleGenreChange = (e) => {
-    props.onUserInput("genre", e.target.value);
+    onUserInput("genre", e.target.value);
   };
 
   return (
-    <Card sx={{ backgroundColor: "rgb(204, 204, 0)" }} variant="outlined">
+    <Card>
+      <CardHeader title="Filter" />
       <CardContent>
-        <Typography variant="h5" component="h1">
-          <SearchIcon fontSize="large" /> Filter the movies.
-        </Typography>
         <TextField
-          sx={{ ...formControl }}
-          id="movie-search"
-          label="Search field"
-          type="search"
-          variant="filled"
-          value={props.titleFilter}
+          label="Title"
+          variant="outlined"
+          value={titleFilter}
           onChange={handleTextChange}
+          fullWidth
+          sx={{ mb: 2 }}
         />
-        <FormControl sx={{ ...formControl }}>
+        <FormControl fullWidth>
           <InputLabel id="genre-label">Genre</InputLabel>
           <Select
             labelId="genre-label"
-            id="genre-select"
             label="Genre"
-            value={String(props.genreFilter)}
+            value={genreFilter}
             onChange={handleGenreChange}
           >
-            {genres.map((genre) => (
-              <MenuItem key={genre.id} value={genre.id}>
-                {genre.name}
+            {genres.map((g) => (
+              <MenuItem key={g.id} value={String(g.id)}>
+                {g.name}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
       </CardContent>
-      <CardMedia sx={{ height: 300 }} image={img} title="Filter" />
-      <CardContent>
-        <Typography variant="h5" component="h1">
-          <SearchIcon fontSize="large" /> Filter the movies.
-        </Typography>
-      </CardContent>
     </Card>
   );
-}
+};
+
+export default FilterMoviesCard;

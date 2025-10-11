@@ -6,7 +6,7 @@ const MovieList = (props) => {
   return (
     <div className="grid">
       {movies.map((m) => (
-        <Movie key={m.id} movie={m} selectFavorite={props.selectFavorite} />
+        <Movie key={m.id} movie={m} action={props.action} />
       ))}
     </div>
   );

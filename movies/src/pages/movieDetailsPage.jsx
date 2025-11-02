@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import MovieDetails from "../components/movieDetails/";
 import PageTemplate from "../components/templateMoviePage";
@@ -16,6 +16,10 @@ const MoviePage = () => {
 
   if (isPending) return <Spinner />;
   if (isError) return <h1>{error.message}</h1>;
+
+  // Part 1: Extend the App - MovieDetails component will now ALSO
+  // show a "Top Cast" section and link to each actor's page.
+  // That new cast code lives inside MovieDetails/index.jsx.
 
   return (
     <>

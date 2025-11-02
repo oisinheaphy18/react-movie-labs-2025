@@ -1,14 +1,16 @@
 import React from "react";
-import Movie from "../movieCard/";
+import Grid from "@mui/material/Grid";
+import MovieCard from "../movieCard";
 
-const MovieList = (props) => {
-  const movies = props.movies || [];
+const MovieList = ({ movies, action, badgeText }) => {
   return (
-    <div className="grid">
+    <Grid container spacing={5}>
       {movies.map((m) => (
-        <Movie key={m.id} movie={m} action={props.action} />
+        <Grid key={m.id} item xs={12} sm={6} md={4} lg={3} xl={2}>
+          <MovieCard movie={m} action={action} badgeText={badgeText} />
+        </Grid>
       ))}
-    </div>
+    </Grid>
   );
 };
 

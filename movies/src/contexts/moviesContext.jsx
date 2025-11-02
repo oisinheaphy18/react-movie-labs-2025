@@ -8,13 +8,9 @@ const MoviesContextProvider = (props) => {
   const [mustWatch, setMustWatch] = useState([]);
 
   const addToFavorites = (movie) => {
-    let newFavorites = [];
     if (!favorites.includes(movie.id)) {
-      newFavorites = [...favorites, movie.id];
-    } else {
-      newFavorites = [...favorites];
+      setFavorites([...favorites, movie.id]);
     }
-    setFavorites(newFavorites);
   };
 
   const removeFromFavorites = (movie) => {
@@ -25,13 +21,15 @@ const MoviesContextProvider = (props) => {
     setMyReviews({ ...myReviews, [movie.id]: review });
   };
 
+  // Part 2: Extend Functionality - Watchlist
   const addToMustWatch = (movie) => {
-    let newMustWatch = mustWatch;
     if (!mustWatch.includes(movie.id)) {
-      newMustWatch = [...mustWatch, movie.id];
-      setMustWatch(newMustWatch);
+      setMustWatch([...mustWatch, movie.id]);
     }
-    console.log(newMustWatch);
+  };
+
+  const removeFromMustWatch = (movie) => {
+    setMustWatch(mustWatch.filter((mId) => mId !== movie.id));
   };
 
   return (
@@ -43,6 +41,7 @@ const MoviesContextProvider = (props) => {
         addReview,
         mustWatch,
         addToMustWatch,
+        removeFromMustWatch,
       }}
     >
       {props.children}

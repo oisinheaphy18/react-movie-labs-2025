@@ -1,48 +1,47 @@
 import React, { useState } from "react";
 import Header from "../headerMovieList";
-import FilterCard from "../filterMoviesCard";
 import MovieList from "../movieList";
 import Grid from "@mui/material/Grid";
+import FilterCard from "../filterMoviesCard";
 
-function MovieListPageTemplate({ movies, title, action }) {
+const TemplateMovieListPage = ({ title, movies, action, badgeText }) => {
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
+
   const genreId = Number(genreFilter);
 
-  const displayedMovies = (movies || [])
-    .filter((m) => m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1)
-    .filter((m) => (genreId > 0 ? m.genre_ids.includes(genreId) : true));
+  let displayedMovies = movies
+    .filter((m) => {
+      return m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1;
+    })
+    .filter((m) => {
+      return genreId > 0 ? m.genre_ids.includes(genreId) : true;
+    });
 
   const handleChange = (type, value) => {
     if (type === "name") setNameFilter(value);
-    else setGenreFilter(value);
+    if (type === "genre") setGenreFilter(value);
   };
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <Header title={title} />
+    <Grid container sx={{ padding: "20px" }}>
+      <Grid item xs={12} sm={6} md={4} lg={3} xl={3}>
+        <FilterCard
+          onUserInput={handleChange}
+          titleFilter={nameFilter}
+          genreFilter={genreFilter}
+        />
       </Grid>
-      <Grid container sx={{ flex: "1 1 500px" }}>
-        <Grid
-          item
-          key="find"
-          xs={12}
-          sm={6}
-          md={4}
-          lg={3}
-          xl={2}
-          sx={{ padding: "20px" }}
-        >
-          <FilterCard
-            onUserInput={handleChange}
-            titleFilter={nameFilter}
-            genreFilter={genreFilter}
-          />
-        </Grid>
-        <MovieList action={action} movies={displayedMovies} />
+      <Grid item xs={12} sm={6} md={8} lg={9} xl={9}>
+        <Header title={title} />
+        <MovieList
+          movies={displayedMovies}
+          action={action}
+          badgeText={badgeText}
+        />
       </Grid>
     </Grid>
   );
-}
-export default MovieListPageTemplate;
+};
+
+export default TemplateMovieListPage;

@@ -36,9 +36,7 @@ export const getUpcomingMovies = () => {
     });
 };
 
-// NOTE: this was called "trendingToday" in your code but was using upcoming.
-// you can change this later to the real /trending endpoint if you want.
-// leaving as-is for now to avoid breaking anything.
+
 export const getTrendingToday = () => {
   return fetch(
     `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
@@ -133,8 +131,7 @@ export const getMovieReviews = ({ queryKey }) => {
 
 // ------------------------------------------------------------
 // Part 1: Extend the App - Static new endpoint (Top Rated)
-// I added this so we can show a new "Top Rated Movies" page.
-// This helps hit the rubric for "additional TMDB endpoints".
+// I added this to show a new "Top Rated Movies" page.
 // ------------------------------------------------------------
 export const getTopRatedMovies = () => {
   return fetch(
@@ -157,7 +154,7 @@ export const getTopRatedMovies = () => {
 // ------------------------------------------------------------
 // Part 1: Extend the App - Parameterised endpoint (Cast list)
 // I added this to get the cast for ONE movie using its ID.
-// This is a parameterised endpoint and is needed for higher marks.
+// This is a parameterised endpoint.
 // ------------------------------------------------------------
 export const getMovieCredits = (movieId) => {
   return fetch(
@@ -179,8 +176,8 @@ export const getMovieCredits = (movieId) => {
 
 // ------------------------------------------------------------
 // Part 1: Extend the App - Parameterised endpoint (Actor info)
-// I added these two so we can click an actor and go to their page.
-// This links information across pages which is in the top grade band.
+// I added these two so you can click an actor and go to their page.
+// This links information across pages.
 // ------------------------------------------------------------
 export const getPersonDetails = (personId) => {
   return fetch(

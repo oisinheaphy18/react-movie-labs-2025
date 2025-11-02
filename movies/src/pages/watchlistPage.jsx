@@ -1,10 +1,13 @@
+// Part 2 — Watchlist page: shows only movies added to mustWatch,
+// and lets you remove them with the correct removeFromMustWatch action.
+
 import React, { useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import PageTemplate from "../components/templateMovieListPage";
 import Spinner from "../components/spinner";
 import { MoviesContext } from "../contexts/moviesContext";
 import { getMovies } from "../api/tmdb-api";
-import RemoveFromFavoritesIcon from "../components/cardIcons/removeFromFavorites";
+import RemoveFromWatchlist from "../components/cardIcons/removeFromWatchList";
 
 const WatchlistPage = () => {
   const { mustWatch } = useContext(MoviesContext);
@@ -24,7 +27,7 @@ const WatchlistPage = () => {
     <PageTemplate
       title="My Watchlist"
       movies={watchlistMovies}
-      action={(movie) => <RemoveFromFavoritesIcon movie={movie} />}
+      action={(movie) => <RemoveFromWatchlist movie={movie} />}
     />
   );
 };

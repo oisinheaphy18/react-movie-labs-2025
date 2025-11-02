@@ -13,6 +13,7 @@ const MovieCard = ({ movie, action, badgeText }) => {
 
   return (
     <Card sx={{ maxWidth: 345 }}>
+      {/* Part 3 — optional small banner at the top of the card */}
       {badgeText ? (
         <div
           style={{

@@ -1,15 +1,13 @@
-// src/pages/topRatedMoviesPage.jsx
-
+// Part 1 — new page that consumes the Top Rated endpoint
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import PageTemplate from "../components/templateMovieListPage";
 import Spinner from "../components/spinner";
-// Part 1: Extend the App - we fetch top rated movies here
 import { getTopRatedMovies } from "../api/tmdb-api";
 import PlaylistAdd from "../components/cardIcons/playlistAdd";
 
 const TopRatedMoviesPage = () => {
-  // Part 1: Extend the App - useQuery calls our new API function
+  // Part 1 — load Top Rated movies with React Query
   const { data, error, isPending, isError } = useQuery({
     queryKey: ["toprated"],
     queryFn: getTopRatedMovies,
@@ -25,7 +23,7 @@ const TopRatedMoviesPage = () => {
     <PageTemplate
       title="Top Rated Movies"
       movies={movies}
-      // we can reuse PlaylistAdd icon if you want to add to watchlist/mustWatch
+      // reuse add-to-watchlist icon
       action={(movie) => <PlaylistAdd movie={movie} />}
     />
   );

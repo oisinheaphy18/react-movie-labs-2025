@@ -1,8 +1,6 @@
-// src/pages/personDetailsPage.jsx
-
+// Part 1 — new page: actor details + filmography using parameterised endpoints
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-// Part 1: Extend the App - we use new API calls for person info
 import {
   getPersonDetails,
   getPersonMovieCredits,
@@ -14,38 +12,24 @@ const PersonDetailsPage = () => {
   const [credits, setCredits] = useState([]);
   const [errorText, setErrorText] = useState("");
 
-  // Part 1: Extend the App - load basic actor info
+  // Part 1 — load basic actor info
   useEffect(() => {
     getPersonDetails(id)
-      .then((data) => {
-        setPerson(data);
-      })
-      .catch((err) => {
-        setErrorText(err.message);
-      });
+      .then((data) => setPerson(data))
+      .catch((err) => setErrorText(err.message));
   }, [id]);
 
-  // Part 1: Extend the App - load movies this actor is in
+  // Part 1 — load movies this actor is in
   useEffect(() => {
     getPersonMovieCredits(id)
       .then((data) => {
-        // data.cast is an array of movies they've acted in
-        if (data && data.cast) {
-          setCredits(data.cast);
-        }
+        if (data && data.cast) setCredits(data.cast);
       })
-      .catch((err) => {
-        setErrorText(err.message);
-      });
+      .catch((err) => setErrorText(err.message));
   }, [id]);
 
-  if (errorText !== "") {
-    return <h1>{errorText}</h1>;
-  }
-
-  if (!person) {
-    return <h1>Loading...</h1>;
-  }
+  if (errorText !== "") return <h1>{errorText}</h1>;
+  if (!person) return <h1>Loading...</h1>;
 
   // Build profile image URL if we have one
   const profileUrl = person.profile_path
@@ -54,7 +38,7 @@ const PersonDetailsPage = () => {
 
   return (
     <div style={{ padding: "1rem" }}>
-      {/* Part 1: Extend the App - actor basic info */}
+      {/* Part 1 — actor basic info */}
       <h2>{person.name}</h2>
       {profileUrl !== "" && (
         <img
@@ -67,7 +51,7 @@ const PersonDetailsPage = () => {
 
       <h3>Known For</h3>
       <ul>
-        {/* Part 1: Extend the App - link back to each movie */}
+        {/* Part 1 — link back to each movie from the actor page */}
         {credits.map((m) => (
           <li key={m.credit_id}>
             <Link to={`/movies/${m.id}`}>{m.title}</Link>

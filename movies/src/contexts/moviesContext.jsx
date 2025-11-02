@@ -5,6 +5,9 @@ export const MoviesContext = React.createContext(null);
 const MoviesContextProvider = (props) => {
   const [favorites, setFavorites] = useState([]);
   const [myReviews, setMyReviews] = useState({});
+
+  // Part 2 — new state for Watchlist (mustWatch)
+  // store movie IDs the user wants to watch later
   const [mustWatch, setMustWatch] = useState([]);
 
   const addToFavorites = (movie) => {
@@ -21,13 +24,14 @@ const MoviesContextProvider = (props) => {
     setMyReviews({ ...myReviews, [movie.id]: review });
   };
 
-  // Part 2: Extend Functionality - Watchlist
+  // Part 2 — add movie to Watchlist
   const addToMustWatch = (movie) => {
     if (!mustWatch.includes(movie.id)) {
       setMustWatch([...mustWatch, movie.id]);
     }
   };
 
+  // Part 2 — remove movie from Watchlist
   const removeFromMustWatch = (movie) => {
     setMustWatch(mustWatch.filter((mId) => mId !== movie.id));
   };
@@ -39,6 +43,8 @@ const MoviesContextProvider = (props) => {
         addToFavorites,
         removeFromFavorites,
         addReview,
+
+        // Part 2 — expose Watchlist API
         mustWatch,
         addToMustWatch,
         removeFromMustWatch,

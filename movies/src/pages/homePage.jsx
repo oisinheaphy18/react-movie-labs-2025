@@ -1,9 +1,13 @@
+// Part 2 — Show both: add to Favourites and add to Watchlist on the home list
+
 import React from "react";
-import { getMovies } from "../api/tmdb-api";
-import PageTemplate from "../components/templateMovieListPage";
 import { useQuery } from "@tanstack/react-query";
+import PageTemplate from "../components/templateMovieListPage";
 import Spinner from "../components/spinner";
+import { getMovies } from "../api/tmdb-api";
+
 import AddToFavoritesIcon from "../components/cardIcons/addToFavorites";
+import PlaylistAdd from "../components/cardIcons/playlistAdd";
 
 const HomePage = () => {
   const { data, error, isPending, isError } = useQuery({
@@ -20,7 +24,13 @@ const HomePage = () => {
     <PageTemplate
       title="Discover Movies"
       movies={movies}
-      action={(movie) => <AddToFavoritesIcon movie={movie} />}
+      // Part 2 — render both icons on each card
+      action={(movie) => (
+        <>
+          <AddToFavoritesIcon movie={movie} />
+          <PlaylistAdd movie={movie} />
+        </>
+      )}
     />
   );
 };

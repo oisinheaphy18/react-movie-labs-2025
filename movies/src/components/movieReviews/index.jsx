@@ -39,6 +39,7 @@ export default function MovieReviews({ movie }) {
               <TableCell component="th" scope="row">
                 {r.author}
               </TableCell>
+              {/* Part 3 — keep long text tidy using excerpt() */}
               <TableCell>{excerpt(r.content)}</TableCell>
               <TableCell align="right">
                 <Link to={`/reviews/${r.id}`} state={{ review: r, movie: movie }}>

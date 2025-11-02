@@ -12,10 +12,15 @@ import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
 import MovieReviewPage from "./pages/movieReviewPage";
 import AddMovieReviewPage from "./pages/addMovieReviewPage";
 import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
+
+// (Part 1 imports kept)
 import TopRatedMoviesPage from "./pages/topRatedMoviesPage";
 import TrendingTodayPage from "./pages/trendingTodayPage";
 import PersonDetailsPage from "./pages/personDetailsPage";
+
+// Part 2 — new page route for Watchlist feature
 import WatchlistPage from "./pages/watchlistPage";
+
 import SiteHeader from "./components/siteHeader";
 import MoviesContextProvider from "./contexts/moviesContext";
 
@@ -42,10 +47,15 @@ const App = () => (
             <Route path="/reviews/form" element={<AddMovieReviewPage />} />
             <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
             <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
+
+            {/* Part 2 — route to view Watchlist movies */}
             <Route path="/movies/watchlist" element={<WatchlistPage />} />
+
+            {/* (Part 1 routes kept) */}
             <Route path="/movies/toprated" element={<TopRatedMoviesPage />} />
             <Route path="/movies/trending" element={<TrendingTodayPage />} />
             <Route path="/person/:id" element={<PersonDetailsPage />} />
+
             <Route path="/reviews/:id" element={<MovieReviewPage />} />
             <Route path="/movies/:id" element={<MoviePage />} />
             <Route path="/" element={<HomePage />} />

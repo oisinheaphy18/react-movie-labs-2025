@@ -1,6 +1,5 @@
 // tmdb-api.jsx
-
-// This file talks to TMDB and returns data to the rest of the app.
+// Talks to TMDB and returns data to the rest of the app.
 
 export const getMovies = () => {
   return fetch(
@@ -36,7 +35,7 @@ export const getUpcomingMovies = () => {
     });
 };
 
-
+// Part 1 — new endpoint: “Trending Today” list (static-style feed)
 export const getTrendingToday = () => {
   return fetch(
     `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=1`
@@ -128,10 +127,8 @@ export const getMovieReviews = ({ queryKey }) => {
     });
 };
 
-
 // ------------------------------------------------------------
-// Part 1: Extend the App - Static new endpoint (Top Rated)
-// I added this to show a new "Top Rated Movies" page.
+// Part 1 — new endpoint: Top Rated (static list for a new page)
 // ------------------------------------------------------------
 export const getTopRatedMovies = () => {
   return fetch(
@@ -143,18 +140,15 @@ export const getTopRatedMovies = () => {
           throw new Error(error.status_message || "Something went wrong");
         });
       }
-      return response.json(); // returns {results:[...]}
+      return response.json(); // { results: [...] }
     })
     .catch((error) => {
       throw error;
     });
 };
 
-
 // ------------------------------------------------------------
-// Part 1: Extend the App - Parameterised endpoint (Cast list)
-// I added this to get the cast for ONE movie using its ID.
-// This is a parameterised endpoint.
+// Part 1 — new parameterised endpoint: movie credits (cast)
 // ------------------------------------------------------------
 export const getMovieCredits = (movieId) => {
   return fetch(
@@ -166,18 +160,15 @@ export const getMovieCredits = (movieId) => {
           throw new Error(error.status_message || "Something went wrong");
         });
       }
-      return response.json(); // returns { cast:[...], crew:[...] }
+      return response.json(); // { cast:[...], crew:[...] }
     })
     .catch((error) => {
       throw error;
     });
 };
 
-
 // ------------------------------------------------------------
-// Part 1: Extend the App - Parameterised endpoint (Actor info)
-// I added these two so you can click an actor and go to their page.
-// This links information across pages.
+// Part 1 — new parameterised endpoints: person details + credits
 // ------------------------------------------------------------
 export const getPersonDetails = (personId) => {
   return fetch(
@@ -206,7 +197,7 @@ export const getPersonMovieCredits = (personId) => {
           throw new Error(error.status_message || "Something went wrong");
         });
       }
-      return response.json(); // returns { cast:[ movies... ] }
+      return response.json(); // { cast:[ movies... ] }
     })
     .catch((error) => {
       throw error;

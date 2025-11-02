@@ -6,6 +6,7 @@ import { MoviesContext } from "../../contexts/moviesContext";
 const PlaylistAdd = ({ movie }) => {
   const context = useContext(MoviesContext);
 
+  // Part 2 — add the movie to Watchlist on click
   const handleAddToWatchlist = (e) => {
     e.preventDefault();
     context.addToMustWatch(movie);

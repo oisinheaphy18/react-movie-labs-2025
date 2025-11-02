@@ -9,15 +9,18 @@ import Chip from "@mui/material/Chip";
 import Box from "@mui/material/Box";
 import MovieReviews from "../movieReviews";
 import { Link } from "react-router-dom";
+
+// Part 1 — use movie credits endpoint to show cast
 import { getMovieCredits } from "../../api/tmdb-api";
 
-// import runtime formatter
+// Part 3 — nicer runtime formatting for display
 import { formatRuntime } from "../../util";
 
 const MovieDetails = ({ movie }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [cast, setCast] = useState([]);
 
+  // Part 1 — fetch cast for this movie (parameterised by movie.id)
   useEffect(() => {
     if (movie && movie.id) {
       getMovieCredits(movie.id)
@@ -49,7 +52,7 @@ const MovieDetails = ({ movie }) => {
 
             <Typography variant="body2">Rating: {movie.vote_average}</Typography>
 
-            {/* Part 3: Additional Work - nicer runtime display */}
+            {/* Part 3 — show runtime as “H h M m” */}
             {movie.runtime ? (
               <Typography variant="body2">
                 Runtime: {formatRuntime(movie.runtime)}
@@ -71,6 +74,7 @@ const MovieDetails = ({ movie }) => {
               ))}
             </Box>
 
+            {/* Part 1 — list top cast with links to each person page */}
             <Box sx={{ mt: 3 }}>
               <Typography variant="h6" gutterBottom>
                 Top Cast

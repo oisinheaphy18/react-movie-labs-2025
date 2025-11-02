@@ -20,12 +20,13 @@ const SiteHeader = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
 
+  // Part 2 — add Watchlist to main navigation
   const menuOptions = [
     { label: "Home", path: "/" },
     { label: "Favorites", path: "/movies/favorites" },
     { label: "Upcoming", path: "/movies/upcoming" },
-    { label: "Top Rated", path: "/movies/toprated" },
-    { label: "Watchlist", path: "/movies/watchlist" },
+    { label: "Top Rated", path: "/movies/toprated" }, // (Part 1)
+    { label: "Watchlist", path: "/movies/watchlist" }, // Part 2
   ];
 
   const handleMenuSelect = (pageURL) => {

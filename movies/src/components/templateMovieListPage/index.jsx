@@ -11,12 +11,8 @@ const TemplateMovieListPage = ({ title, movies, action, badgeText }) => {
   const genreId = Number(genreFilter);
 
   let displayedMovies = movies
-    .filter((m) => {
-      return m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1;
-    })
-    .filter((m) => {
-      return genreId > 0 ? m.genre_ids.includes(genreId) : true;
-    });
+    .filter((m) => m.title.toLowerCase().includes(nameFilter.toLowerCase()))
+    .filter((m) => (genreId > 0 ? m.genre_ids.includes(genreId) : true));
 
   const handleChange = (type, value) => {
     if (type === "name") setNameFilter(value);
@@ -34,11 +30,8 @@ const TemplateMovieListPage = ({ title, movies, action, badgeText }) => {
       </Grid>
       <Grid item xs={12} sm={6} md={8} lg={9} xl={9}>
         <Header title={title} />
-        <MovieList
-          movies={displayedMovies}
-          action={action}
-          badgeText={badgeText}
-        />
+        {/* Part 3 — forward optional badge text to cards (e.g., “Trending”) */}
+        <MovieList movies={displayedMovies} action={action} badgeText={badgeText} />
       </Grid>
     </Grid>
   );
